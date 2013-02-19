@@ -230,12 +230,6 @@ define([
           break;
         case 'keypress':
           type = 'key';
-        case 'keyup':
-        case 'keydown':
-          if (target && !target._isBSDOMElement && document.activeElement !== document.body) {
-            // There is another currently focused element (outside of the stage), exit:
-            return;
-          }
           var charCode = domEvent.charCode;
           if (!charCode) {
             charCode = domEvent.keyCode;
@@ -244,6 +238,12 @@ define([
             charCode = (String.fromCharCode(charCode)).toUpperCase().charCodeAt(0);
           }
           event.charCode = charCode;
+        case 'keyup':
+        case 'keydown':
+          if (target && !target._isBSDOMElement && document.activeElement !== document.body) {
+            // There is another currently focused element (outside of the stage), exit:
+            return;
+          }
           event.keyCode = domEvent.keyCode;
           event.ctrlKey = domEvent.ctrlKey;
           event.altKey = domEvent.altKey;
